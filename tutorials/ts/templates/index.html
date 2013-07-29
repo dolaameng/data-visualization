@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="{{url_for('static', filename='js/processing.js')}}"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			$.getJSON("/milkdata", function(data) {
+				console.log(data);
+				injectpsj(data);
+			})
+			function injectpsj(data) {
+				var pjs = Processing.getInstanceById("doodle");
+				if (pjs == null) {
+					setTimeout(function(){injectpsj(data);}, 250);
+				} else {
+					for (i = 0; i < data.length; ++i) {
+						var entry = data[i];
+						pjs.addPoint(parseInt(entry.Year), parseFloat(entry.Tea), parseFloat(entry.Coffee), parseFloat(entry.Milk));
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id='doodle' data-processing-sources="{{url_for('static', filename='js/doodle.pde')}}"></canvas>
+	</body>
+</html>

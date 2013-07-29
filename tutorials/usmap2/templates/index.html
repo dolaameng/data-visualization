@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Map Data</title>
+		<script type="text/javascript" src="{{url_for('static', filename='js/processing.js')}}"></script>
+		<script type="text/Javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			//load data
+			$.getJSON("{{url_for('static', filename='js/locations.json')}}", function(data) {
+				registerMapData(data);
+			});
+			function registerMapData(data) {
+				pjs = Processing.getInstanceById("map");
+				if (pjs != null) {
+					for (i = 0; i < data.length; ++i) {
+						var entry = data[i];
+						console.log(entry);
+						pjs.addLocation(entry.name, entry.x, entry.y);
+					}
+				} else {
+					setTimeout(function() {registerMapData(data);}, 250);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Plot JSON data using ajax and object-oriented display</h1>
+		<canvas id="map" data-processing-sources="{{url_for('static', filename='js/map.pde')}}"></canvas>
+	</body>
+</html>
+
+
+
+
