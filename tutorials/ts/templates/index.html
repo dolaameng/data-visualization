@@ -17,11 +17,22 @@
 						var entry = data[i];
 						pjs.addPoint(parseInt(entry.Year), parseFloat(entry.Tea), parseFloat(entry.Coffee), parseFloat(entry.Milk));
 					}
+					pjs.registerJS(this);
 				}
+			}
+			function displayPointInfor(year, coffee, milk, tea) {
+				document.getElementById("year").value = year;
+				document.getElementById("coffee").value = coffee;
+				document.getElementById("milk").value = milk;
+				document.getElementById("tea").value = tea;
 			}
 		</script>
 	</head>
 	<body>
-		<canvas id='doodle' data-processing-sources="{{url_for('static', filename='js/doodle.pde')}}"></canvas>
+		<canvas id='doodle' data-processing-sources="{{url_for('static', filename='js/doodle.pde')}} {{url_for('static', filename='js/javascript.pde')}}"></canvas>
+		<div>
+			Point Detail: <br >
+			Year: <input type="textfield" id="year"> Coffee: <input type="textfield" id="coffee"> Milk: <input type="textfield" id="milk"> Tea: <input type="textfield" id="tea">
+		</div>
 	</body>
 </html>
